@@ -42,6 +42,7 @@ end
 minetest.register_node("ferns:tree_fern_leaves", {
 	description = "Tree Fern Crown (Dicksonia)",
 	drawtype = "plantlike",
+	waving = 1,
 	visual_scale = 2,
 	paramtype = "light",
 	paramtype2 = "facedir",
@@ -70,6 +71,7 @@ minetest.register_node("ferns:tree_fern_leaves", {
 })
 minetest.register_node("ferns:tree_fern_leaves_02", {
 	drawtype = "plantlike",
+	waving = 1,
 	visual_scale = 2,
 	paramtype = "light",
 	tiles = {"ferns_fern_big.png"},
