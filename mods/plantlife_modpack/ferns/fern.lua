@@ -43,6 +43,7 @@ local function create_nodes()
 			description = descs[i] or ("Lady-fern (Athyrium) " .. string.format("%02d", i)),
 			inventory_image = "ferns_fern.png",
 			drawtype = "plantlike",
+			waving = 1,
 			visual_scale = vscales[i],
 			paramtype = "light",
 			tiles = { images[i] },
@@ -91,8 +92,8 @@ if abstract_ferns.config.lady_ferns_near_tree == true then
 		plantlife_limit = -0.9,
 		humidity_max = -1.0,
 		humidity_min = 0.4,
-		temp_max = -0.5, -- 55 캜 (too hot?)
-		temp_min = 0.75, -- -12 캜
+		temp_max = -0.5, -- 55 째C (too hot?)
+		temp_min = 0.75, -- -12 째C
 		random_facedir = { 0, 179 },
 	},
 	nodenames
@@ -118,8 +119,8 @@ if abstract_ferns.config.lady_ferns_near_rock == true then
 		plantlife_limit = -0.9,
 		humidity_max = -1.0,
 		humidity_min = 0.4,
-		temp_max = -0.5, -- 55 캜 (too hot?)
-		temp_min = 0.75, -- -12 캜
+		temp_max = -0.5, -- 55 째C (too hot?)
+		temp_min = 0.75, -- -12 째C
 		random_facedir = { 0, 179 },
 	},
 	nodenames
@@ -156,8 +157,8 @@ if abstract_ferns.config.lady_ferns_near_ores == true then -- this one causes a 
 		plantlife_limit = -0.9,
 		humidity_max = -1.0,
 		humidity_min = 0.4,
-		temp_max = -0.5, -- 55 캜 (too hot?)
-		temp_min = 0.75, -- -12 캜
+		temp_max = -0.5, -- 55 째C (too hot?)
+		temp_min = 0.75, -- -12 째C
 		random_facedir = { 0, 179 },
 	},
 	nodenames
@@ -187,8 +188,8 @@ if abstract_ferns.config.lady_ferns_in_groups == true then -- this one is meant 
 		plantlife_limit = -0.9,
 		humidity_max = -1.0,
 		humidity_min = 0.4,
-		temp_max = -0.5, -- 55 캜 (too hot?)
-		temp_min = 0.75, -- -12 캜
+		temp_max = -0.5, -- 55 째C (too hot?)
+		temp_min = 0.75, -- -12 째C
 		random_facedir = { 0, 179 },
 	},
 	nodenames
