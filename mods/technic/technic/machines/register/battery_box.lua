@@ -142,8 +142,8 @@ function technic.register_battery_box(data)
 			.."^[lowpart:"..charge_percent
 			..":technic_power_meter_fg.png]")
 
-		local infotext = S("%s Battery Box: %d/%d"):format(tier,
-				current_charge, max_charge)
+		local infotext = S("@1 Battery Box: @2/@3", tier,
+				technic.prettynum(current_charge), technic.prettynum(max_charge))
 		if eu_input == 0 then
 			infotext = S("%s Idle"):format(infotext)
 		end
@@ -195,6 +195,8 @@ function technic.register_battery_box(data)
 			allow_metadata_inventory_take = technic.machine_inventory_take,
 			allow_metadata_inventory_move = technic.machine_inventory_move,
 			technic_run = run,
+			after_place_node = data.tube and pipeworks.after_place,
+			after_dig_node = technic.machine_after_dig_node
 		})
 	end
 

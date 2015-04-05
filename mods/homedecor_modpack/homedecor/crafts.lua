@@ -90,7 +90,7 @@ minetest.register_craftitem("homedecor:steel_wire", {
 
 minetest.register_craftitem("homedecor:speaker_driver", {
 	description = S("Speaker driver"),
-	inventory_image = "homedecor_speaker_driver.png"
+	inventory_image = "homedecor_speaker_driver_inv.png"
 })
 
 minetest.register_craftitem("homedecor:fan_blades", {
@@ -406,7 +406,7 @@ minetest.register_craft( {
 
 minetest.register_craft( {
         output = "homedecor:glass_table_large_b 2",
-        recipe = { 
+        recipe = {
 		{ "homedecor:glass_table_small_square", "homedecor:glass_table_small_square" },
 	}
 })
@@ -424,14 +424,14 @@ minetest.register_craft( {
 
 minetest.register_craft( {
         output = "homedecor:wood_table_small_square_b 2",
-        recipe = { 
+        recipe = {
 		{ "homedecor:wood_table_small_round","homedecor:wood_table_small_round" },
 	}
 })
 
 minetest.register_craft( {
         output = "homedecor:wood_table_large_b 2",
-        recipe = { 
+        recipe = {
 		{ "homedecor:wood_table_small_square", "homedecor:wood_table_small_square" },
 	}
 })
@@ -495,7 +495,7 @@ minetest.register_craft({
 
 minetest.register_craft( {
         output = "homedecor:skylight 4",
-        recipe = { 
+        recipe = {
 		{ "homedecor:glass_table_large", "homedecor:glass_table_large" },
 		{ "homedecor:glass_table_large", "homedecor:glass_table_large" },
         },
@@ -1165,7 +1165,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "homedecor:refrigerator_steel_bottom",
+	output = "homedecor:refrigerator_steel",
 	recipe = {
 		{"default:steel_ingot", "homedecor:glowlight_small_cube_white", "default:steel_ingot", },
 		{"default:steel_ingot", "default:copperblock", "default:steel_ingot", },
@@ -1175,9 +1175,9 @@ minetest.register_craft({
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "homedecor:refrigerator_white_bottom",
+	output = "homedecor:refrigerator_white",
 	recipe = {
-		"homedecor:refrigerator_steel_bottom",
+		"homedecor:refrigerator_steel",
 		"dye:white",
 		"dye:white",
 		"dye:white",
@@ -1281,7 +1281,7 @@ minetest.register_craft({
 -- Wrought-iron wall latern
 
 minetest.register_craft({
-	output = "homedecor:wall_lantern 4",
+	output = "homedecor:ground_lantern",
 	recipe = {
 		{ "default:iron_lump", "default:iron_lump", "default:iron_lump" },
 		{ "default:iron_lump", "default:torch", "default:iron_lump" },
@@ -1361,6 +1361,15 @@ minetest.register_craft({
 	}
 })
 
+minetest.register_craft({
+		output = "homedecor:glowlight_half_yellow",
+		type = "shapeless",
+		recipe = {
+		"homedecor:glowlight_quarter_yellow",
+		"homedecor:glowlight_quarter_yellow"
+	}
+})
+
 -- white
 
 minetest.register_craft({
@@ -1427,6 +1436,17 @@ minetest.register_craft({
 		{"homedecor:glowlight_small_cube_white","homedecor:glowlight_small_cube_white"}
 	}
 })
+
+minetest.register_craft({
+		output = "homedecor:glowlight_half_white",
+		type = "shapeless",
+		recipe = {
+		"homedecor:glowlight_quarter_white",
+		"homedecor:glowlight_quarter_white"
+	}
+})
+
+----
 
 minetest.register_craft({
     output = "homedecor:plasma_lamp",
@@ -1842,7 +1862,7 @@ minetest.register_craft( {
 	},
 })
 
--- woodglass door 
+-- woodglass door
 
 minetest.register_craft( {
 	output = "homedecor:door_woodglass_bottom_left",
@@ -2134,6 +2154,15 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+    output = "homedecor:cardboard_box_big 2",
+    recipe = {
+		{ "default:paper", "", "default:paper" },
+		{ "default:paper", "", "default:paper" },
+		{ "default:paper", "default:paper", "default:paper" },
+    },
+})
+
+minetest.register_craft({
     output = "homedecor:desk",
     recipe = {
 		{ "stairs:slab_wood", "stairs:slab_wood", "stairs:slab_wood" },
@@ -2370,7 +2399,7 @@ minetest.register_craft( {
 
 -- bathroom/kitchen tiles
 
-local color_pairings = { 
+local color_pairings = {
 	{ "grey",		"white",		"1" },
 	{ "dark_grey",	"white",		"2" },
 	{ "black",		"white",		"3" },
@@ -2418,7 +2447,7 @@ minetest.register_craft( {
 -- doghouse
 
 minetest.register_craft( {
-        output = "homedecor:doghouse_base",
+        output = "homedecor:doghouse",
         recipe = {
 			{"homedecor:shingles_terracotta", "homedecor:shingles_terracotta", "homedecor:shingles_terracotta"},
 			{"group:wood", "", "group:wood"},
@@ -2487,8 +2516,8 @@ minetest.register_craft( {
         output = "homedecor:pool_table",
         recipe = {
 			{ "wool:dark_green", "wool:dark_green", "wool:dark_green" },
-			{ "group:wood", "group:wood", "group:wood" },
-			{ "group:stick", "", "group:stick" }
+			{ "building_blocks:hardwood", "building_blocks:hardwood", "building_blocks:hardwood" },
+			{ "building_blocks:slab_hardwood", "", "building_blocks:slab_hardwood" }
         },
 })
 
@@ -2519,7 +2548,7 @@ minetest.register_craft( {
 })
 
 minetest.register_craft( {
-        output = "homedecor:well_base",
+        output = "homedecor:well",
         recipe = {
 			{ "homedecor:shingles_wood", "homedecor:shingles_wood", "homedecor:shingles_wood" },
 			{ "group:wood", "group:stick", "group:wood" },
@@ -2712,11 +2741,11 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "homedecor:piano_left",
+	output = "homedecor:piano",
 	recipe = {
 		{ "", "homedecor:steel_wire", "building_blocks:hardwood" },
 		{ "homedecor:plastic_strips", "homedecor:steel_wire", "building_blocks:hardwood" },
-		{ "building_blocks:hardwood", "default:steelblock", "building_blocks:hardwood" }
+		{ "technic:brass_ingot", "default:steelblock", "building_blocks:hardwood" }
 	},
 })
 
@@ -2734,6 +2763,24 @@ minetest.register_craft({
 		{ "group:stick", "building_blocks:terrycloth_towel", "group:stick" },
 		{ "group:stick", "building_blocks:terrycloth_towel", "group:stick" },
 		{ "group:stick", "building_blocks:terrycloth_towel", "group:stick" }
+	},
+})
+
+minetest.register_craft({
+	output = "homedecor:office_chair_basic",
+	recipe = {
+		{ "", "", "wool:black" },
+		{ "", "wool:black", "default:steel_ingot" },
+		{ "group:stick", "homedecor:pole_wrought_iron", "group:stick" }
+	},
+})
+
+minetest.register_craft({
+	output = "homedecor:office_chair_upscale",
+	recipe = {
+		{ "dye:black", "building_blocks:sticks", "group:wool" },
+		{ "homedecor:plastic_sheeting", "group:wool", "default:steel_ingot" },
+		{ "building_blocks:sticks", "homedecor:pole_wrought_iron", "building_blocks:sticks" }
 	},
 })
 
@@ -2879,7 +2926,10 @@ minetest.register_craft({
 local bookcolors = {
 	"red",
 	"green",
-	"blue"
+	"blue",
+	"violet",
+	"grey",
+	"brown"
 }
 
 for _, color in ipairs(bookcolors) do
@@ -2917,7 +2967,7 @@ minetest.register_craft({
 		"homedecor:bottle_brown",
 		"homedecor:bottle_brown",
 		"homedecor:bottle_brown",
-		"homedecor:bottle_brown" 
+		"homedecor:bottle_brown"
 	},
 })
 
@@ -2928,7 +2978,7 @@ minetest.register_craft({
 		"homedecor:bottle_green",
 		"homedecor:bottle_green",
 		"homedecor:bottle_green",
-		"homedecor:bottle_green" 
+		"homedecor:bottle_green"
 	},
 })
 
@@ -2952,6 +3002,98 @@ minetest.register_craft({
 	},
 })
 
+local picture_dyes = {
+	{"dye:brown", "dye:green"}, -- the figure sitting by the tree, wielding a pick
+	{"dye:green", "dye:blue"}	-- the "family photo"
+}
+
+for i in ipairs(picture_dyes) do
+	minetest.register_craft({
+		output = "homedecor:picture_frame"..i,
+		recipe = {
+			{ picture_dyes[i][1], picture_dyes[i][2] },
+			{ "homedecor:blank_canvas", "group:stick" },
+		},
+	})
+end
+
+local dlamp_colors = { "red","blue","green","violet" }
+
+for _, color in ipairs(dlamp_colors) do
+	minetest.register_craft({
+		output = "homedecor:desk_lamp_"..color,
+		recipe = {
+			{ "", "homedecor:steel_strip", "homedecor:glowlight_small_cube_white" },
+			{ "", "homedecor:copper_wire", "" },
+			{ "homedecor:plastic_sheeting", "dye:"..color, "homedecor:plastic_sheeting" },
+		},
+	})
+end
+
+minetest.register_craft({
+	output = "homedecor:hanging_lantern 2",
+	recipe = {
+		{ "default:iron_lump", "default:iron_lump", "" },
+		{ "default:iron_lump", "homedecor:lattice_lantern_large", "" },
+		{ "default:iron_lump", "", "" },
+	},
+})
+
+minetest.register_craft({
+	output = "homedecor:ceiling_lantern 2",
+	recipe = {
+		{ "default:iron_lump", "default:iron_lump", "default:iron_lump" },
+		{ "default:iron_lump", "homedecor:lattice_lantern_large", "default:iron_lump" },
+		{ "", "default:iron_lump", "" },
+	},
+})
+
+minetest.register_craft({
+	output = "homedecor:desk_globe",
+	recipe = {
+		{ "group:stick", "homedecor:plastic_sheeting", "dye:green" },
+		{ "group:stick", "homedecor:plastic_sheeting", "homedecor:plastic_sheeting" },
+		{ "group:stick", "stairs:slab_wood", "dye:blue" }
+	},
+})
+
+minetest.register_craft({
+	output = "homedecor:desk_globe",
+	recipe = {
+		{ "group:stick", "homedecor:plastic_sheeting", "dye:green" },
+		{ "group:stick", "homedecor:plastic_sheeting", "homedecor:plastic_sheeting" },
+		{ "group:stick", "moreblocks:slab_wood", "dye:blue" }
+	},
+})
+
+minetest.register_craft({
+	output = "homedecor:tool_cabinet_bottom",
+	recipe = {
+		{ "homedecor:motor", "default:axe_steel", "default:pick_steel" },
+		{ "default:steel_ingot", "homedecor:drawer_small", "default:steel_ingot" },
+		{ "default:steel_ingot", "homedecor:drawer_small", "default:steel_ingot" }
+	},
+})
+
+minetest.register_craft({
+	output = "homedecor:bathroom_set",
+	recipe = {
+		{ "", "homedecor:glass_table_small_round", "" },
+		{ "homedecor:plastic_sheeting", "homedecor:glass_table_small_round", "homedecor:plastic_sheeting" },
+		{ "group:stick", "homedecor:plastic_sheeting", "group:stick" }
+	},
+})
+
+minetest.register_craft({
+	output = "homedecor:trash_can_green",
+	recipe = {
+		{ "homedecor:plastic_sheeting", "", "homedecor:plastic_sheeting" },
+		{ "homedecor:plastic_sheeting", "dye:green", "homedecor:plastic_sheeting" },
+		{ "homedecor:plastic_sheeting", "homedecor:plastic_sheeting", "homedecor:plastic_sheeting" }
+	},
+})
+
 if (minetest.get_modpath("technic") and minetest.get_modpath("dye") and minetest.get_modpath("bees")) then
 	technic.register_separating_recipe({ input = {"bees:wax 1"}, output = {"homedecor:oil_extract 2","dye:yellow 1"} })
 end
+

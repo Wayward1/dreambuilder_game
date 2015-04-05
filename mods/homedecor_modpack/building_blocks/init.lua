@@ -272,7 +272,7 @@ minetest.register_node("building_blocks:hardwood", {
 if minetest.get_modpath("moreblocks") then
 
 	stairsplus:register_all(
-		"building_blocks", 
+		"building_blocks",
 		"marble",
 		"building_blocks:Marble",
 		{
@@ -328,7 +328,28 @@ if minetest.get_modpath("moreblocks") then
 			sounds = default.node_sound_stone_defaults(),
 		}
 	)
-	
+	stairsplus:register_all(
+		"building_blocks",
+		"Adobe",
+		"building_blocks:Adobe",
+		{
+			description = "Adobe",
+			tiles = {"building_blocks_Adobe.png"},
+			groups = {crumbly=3},
+			sounds = default.node_sound_stone_defaults(),
+		}
+	)
+	stairsplus:register_all(
+		"building_blocks",
+		"Roofing",
+		"building_blocks:Roofing",
+		{
+			description = "Roofing",
+			tiles = {"building_blocks_Roofing.png"},
+			groups = {snappy=3},
+			sounds = default.node_sound_stone_defaults(),
+		}
+	)
 else
 	bb_stairs = {}
 
@@ -433,6 +454,18 @@ else
 		"Grate Stair",
 		"Grate Slab"
 	)
+	bb_stairs.register_stair_and_slab("Adobe", "building_blocks:Adobe",
+		{crumbly=3},
+		{"building_blocks_Adobe.png"},
+		"Adobe stair",
+		"Adobe slab"
+	)
+	bb_stairs.register_stair_and_slab("Roofing", "building_blocks:Roofing",
+		{snappy=3},
+		{"building_blocks_Roofing.png"},
+		"Roofing stair",
+		"Roofing slab"
+	)
 end
 
 
@@ -535,4 +568,40 @@ minetest.register_craft({
 		{"default:clay", "building_blocks:Tar","default:clay"},
 	}
 })
+
+if not minetest.get_modpath("technic") then 
+	minetest.register_node( ":technic:granite", {
+		    description = "Granite",
+		    tiles = { "technic_granite.png" },
+		    is_ground_content = true,
+		    groups = {cracky=1},
+		    sounds = default.node_sound_stone_defaults(),
+	}) 
+
+	minetest.register_craft({
+		output = "technic:granite 9",
+		recipe = {
+			{ "building_blocks:Tar", "building_blocks:Marble", "building_blocks:Tar" },
+			{ "building_blocks:Marble", "building_blocks:Tar", "building_blocks:Marble" },
+			{ "building_blocks:Tar", "building_blocks:Marble", "building_blocks:Tar" }
+		},
+	})
+
+	if minetest.get_modpath("moreblocks") then
+		stairsplus:register_all("technic", "granite", "technic:granite", {
+				description="Granite",
+				groups={cracky=1, not_in_creative_inventory=1},
+				tiles={"technic_granite.png"},
+		})
+
+		minetest.register_craft({
+			output = "technic:granite 9",
+			recipe = {
+				{ "moreblocks:tar", "building_blocks:Marble", "moreblocks:tar" },
+				{ "building_blocks:Marble", "moreblocks:tar", "building_blocks:Marble" },
+				{ "moreblocks:tar", "building_blocks:Marble", "moreblocks:tar" }
+			},
+		})
+	end
+end
 

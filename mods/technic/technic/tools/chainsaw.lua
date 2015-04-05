@@ -14,7 +14,7 @@ local timber_nodenames = {
 	["default:cactus"]     = true,
 	["default:tree"]       = true,
 	["default:apple"]      = true,
-	["default:pine"]       = true,
+	["default:pinetree"]   = true,
 }
 
 if chainsaw_leaves then
@@ -36,31 +36,21 @@ end
 -- Support moretrees if it is there
 if minetest.get_modpath("moretrees") then
 	timber_nodenames["moretrees:acacia_trunk"]                = true
+<<<<<<< HEAD
 	timber_nodenames["moretrees:acacia_trunk_sideways"]       = true
+=======
+>>>>>>> e5d22e88aa7c07da822bd3972def4d51b2936c10
 	timber_nodenames["moretrees:apple_tree_trunk"]                 = true
-	timber_nodenames["moretrees:apple_tree_trunk_sideways"]        = true
 	timber_nodenames["moretrees:beech_trunk"]                      = true
-	timber_nodenames["moretrees:beech_trunk_sideways"]             = true
 	timber_nodenames["moretrees:birch_trunk"]                      = true
-	timber_nodenames["moretrees:birch_trunk_sideways"]             = true
 	timber_nodenames["moretrees:fir_trunk"]                        = true
-	timber_nodenames["moretrees:fir_trunk_sideways"]               = true
 	timber_nodenames["moretrees:oak_trunk"]                        = true
-	timber_nodenames["moretrees:oak_trunk_sideways"]               = true
 	timber_nodenames["moretrees:palm_trunk"]                       = true
-	timber_nodenames["moretrees:palm_trunk_sideways"]              = true
 	timber_nodenames["moretrees:pine_trunk"]                       = true
-	timber_nodenames["moretrees:pine_trunk_sideways"]              = true
-	timber_nodenames["moretrees:rubber_tree_trunk_sideways"]       = true
-	timber_nodenames["moretrees:rubber_tree_trunk_sideways_empty"] = true
 	timber_nodenames["moretrees:sequoia_trunk"]                    = true
-	timber_nodenames["moretrees:sequoia_trunk_sideways"]           = true
 	timber_nodenames["moretrees:spruce_trunk"]                     = true
-	timber_nodenames["moretrees:spruce_trunk_sideways"]            = true
 	timber_nodenames["moretrees:willow_trunk"]                     = true
-	timber_nodenames["moretrees:willow_trunk_sideways"]            = true
 	timber_nodenames["moretrees:jungletree_trunk"]                 = true
-	timber_nodenames["moretrees:jungletree_trunk_sideways"]        = true
 
 	if chainsaw_leaves then
 		timber_nodenames["moretrees:acacia_leaves"]            = true
@@ -159,6 +149,14 @@ end
 if minetest.get_modpath("vines") then
 	if chainsaw_leaves then
 		timber_nodenames["vines:vines"] = true
+	end
+end
+
+if minetest.get_modpath("trunks") then
+	if chainsaw_leaves then
+		timber_nodenames["trunks:moss"] = true
+		timber_nodenames["trunks:moss_fungus"] = true
+		timber_nodenames["trunks:treeroot"] = true
 	end
 end
 
@@ -350,17 +348,21 @@ minetest.register_tool("technic:chainsaw", {
 		-- Send current charge to digging function so that the
 		-- chainsaw will stop after digging a number of nodes
 		meta.charge = chainsaw_dig(pointed_thing.under, meta.charge)
-
-		technic.set_RE_wear(itemstack, meta.charge, chainsaw_max_charge)
-		itemstack:set_metadata(minetest.serialize(meta))
+		if not technic.creative_mode then
+			technic.set_RE_wear(itemstack, meta.charge, chainsaw_max_charge)
+			itemstack:set_metadata(minetest.serialize(meta))
+		end
 		return itemstack
 	end,
 })
 
+local mesecons_button = minetest.get_modpath("mesecons_button")
+local trigger = mesecons_button and "mesecons_button:button_off" or "default:mese_crystal_fragment"
+
 minetest.register_craft({
 	output = "technic:chainsaw",
 	recipe = {
-		{"technic:stainless_steel_ingot", "mesecons_button:button_off", "technic:battery"},
+		{"technic:stainless_steel_ingot", trigger,                      "technic:battery"},
 		{"technic:fine_copper_wire",      "technic:motor",              "technic:battery"},
 		{"",                              "",                           "technic:stainless_steel_ingot"},
 	}

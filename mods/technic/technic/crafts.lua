@@ -1,3 +1,6 @@
+-- check if we have the necessary dependencies to allow actually using these materials in the crafts
+local mesecons_materials = minetest.get_modpath("mesecons_materials")
+
 -- tubes crafting recipes
 
 minetest.register_craft({
@@ -97,10 +100,12 @@ minetest.register_craft({
 	}
 })
 
+local isolation = mesecons_materials and "mesecons_materials:fiber" or "technic:rubber"
+
 minetest.register_craft({
 	output = 'technic:lv_transformer',
 	recipe = {
-		{'mesecons_materials:fiber',   'technic:wrought_iron_ingot', 'mesecons_materials:fiber'},
+		{isolation,                    'technic:wrought_iron_ingot', isolation},
 		{'technic:copper_coil',        'technic:wrought_iron_ingot', 'technic:copper_coil'},
 		{'technic:wrought_iron_ingot', 'technic:wrought_iron_ingot', 'technic:wrought_iron_ingot'},
 	}
@@ -109,7 +114,7 @@ minetest.register_craft({
 minetest.register_craft({
 	output = 'technic:mv_transformer',
 	recipe = {
-		{'mesecons_materials:fiber',   'technic:carbon_steel_ingot', 'mesecons_materials:fiber'},
+		{isolation,                    'technic:carbon_steel_ingot', isolation},
 		{'technic:copper_coil',        'technic:carbon_steel_ingot', 'technic:copper_coil'},
 		{'technic:carbon_steel_ingot', 'technic:carbon_steel_ingot', 'technic:carbon_steel_ingot'},
 	}
@@ -118,7 +123,7 @@ minetest.register_craft({
 minetest.register_craft({
 	output = 'technic:hv_transformer',
 	recipe = {
-		{'mesecons_materials:fiber',      'technic:stainless_steel_ingot', 'mesecons_materials:fiber'},
+		{isolation,                       'technic:stainless_steel_ingot', isolation},
 		{'technic:copper_coil',           'technic:stainless_steel_ingot', 'technic:copper_coil'},
 		{'technic:stainless_steel_ingot', 'technic:stainless_steel_ingot', 'technic:stainless_steel_ingot'},
 	}
@@ -159,30 +164,16 @@ minetest.register_craft({
 })
 
 -- Remove some recipes
-minetest.register_craftitem("technic:nothing", {
-	description = "",
-	inventory_image = "blank.png",
-	groups = { not_in_creative_inventory = 1 },
-})
-
-if minetest.register_craft_predict then
-	minetest.register_craft_predict(function(itemstack, player, old_craft_grid, craft_inv)
-		if itemstack:get_name() == "technic:nothing" then
-			return ItemStack("")
-		end
-	end)
-end
-
 -- Bronze
 minetest.register_craft({
 	type = "shapeless",
-	output = "technic:nothing",
+	output = "default:bronze_ingot 0",
 	recipe = {"default:copper_ingot", "default:steel_ingot"}
 })
 
 -- Accelerator tube
 minetest.register_craft({
-	output = "technic:nothing",
+	output = "pipeworks:accelerator_tube_1 0",
 	recipe = {
 	        { "homedecor:plastic_sheeting", "homedecor:plastic_sheeting", "homedecor:plastic_sheeting" },
 	        { "default:mese_crystal_fragment", "default:steel_ingot", "default:mese_crystal_fragment" },
@@ -192,7 +183,7 @@ minetest.register_craft({
 
 -- Teleport tube
 minetest.register_craft({
-	output = "technic:nothing",
+	output = "pipeworks:teleport_tube_1 0",
 	recipe = {
 	        { "homedecor:plastic_sheeting", "homedecor:plastic_sheeting", "homedecor:plastic_sheeting" },
 	        { "default:desert_stone", "default:mese_block", "default:desert_stone" },

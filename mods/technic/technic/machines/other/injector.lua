@@ -65,8 +65,16 @@ minetest.register_node("technic:injector", {
 	description = S("Self-Contained Injector"),
 	tiles = {"technic_injector_top.png", "technic_injector_bottom.png", "technic_injector_side.png",
 		"technic_injector_side.png", "technic_injector_side.png", "technic_injector_side.png"},
-	groups = {snappy=2, choppy=2, oddly_breakable_by_hand=2, tubedevice=1},
-	tube = {connect_sides={bottom=1}},
+	groups = {snappy=2, choppy=2, oddly_breakable_by_hand=2, tubedevice=1, tubedevice_receiver=1},
+	tube = {
+		can_insert = function(pos, node, stack, direction)
+			return minetest.get_meta(pos):get_inventory():room_for_item("main",stack)
+		end,
+		insert_object = function(pos, node, stack, direction)
+			return minetest.get_meta(pos):get_inventory():add_item("main",stack)
+		end,
+		connect_sides = {left=1, right=1, front=1, back=1, top=1, bottom=1},
+	},
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
@@ -90,6 +98,8 @@ minetest.register_node("technic:injector", {
 	allow_metadata_inventory_put = technic.machine_inventory_put,
 	allow_metadata_inventory_take = technic.machine_inventory_take,
 	allow_metadata_inventory_move = technic.machine_inventory_move,
+	after_place_node = pipeworks.after_place,
+	after_dig_node = pipeworks.after_dig
 })
 
 minetest.register_abm({

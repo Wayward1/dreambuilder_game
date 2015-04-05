@@ -1,3 +1,16 @@
+--load config
+local sepchar = nil
+do
+	local sepcode = technic.config:get("thousand_separator")
+	--default is SI style
+	sepchar = sepcode and string.char(sepcode) or " "
+	baresepchar = sepchar
+	--handling if sepchar is magic...
+	for magic in string.gmatch("().%+-*?[^$", ".") do
+		if sepchar == magic then sepchar = "%"..sepchar end
+	end
+end
+
 -- Only changes name, keeps other params
 function technic.swap_node(pos, name)
 	local node = minetest.get_node(pos)
@@ -36,3 +49,19 @@ function technic.function_exists(function_name)
 	return type(resolve_name(function_name)) == 'function'
 end
 
+-- if the node is loaded, returns it. If it isn't loaded, load it and return nil.
+function technic.get_or_load_node(pos)
+	local node_or_nil = minetest.get_node_or_nil(pos)
+	if node_or_nil then return node_or_nil end
+	local vm = VoxelManip()
+	local MinEdge, MaxEdge = vm:read_from_map(pos, pos)
+	return nil
+end
+
+function technic.prettynum(num)
+	local str, k = tostring(num), nil
+	repeat
+		str, k = str:gsub("^(-?%d+)(%d%d%d)", "%1"..sepchar.."%2")
+	until k == 0
+	return str
+end

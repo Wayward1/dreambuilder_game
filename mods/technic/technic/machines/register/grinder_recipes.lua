@@ -18,12 +18,27 @@ local recipes = {
 	{"technic:chromium_lump",   "technic:chromium_dust 2"},
 	{"technic:uranium_lump",    "technic:uranium_dust 2"},
 	{"technic:zinc_lump",       "technic:zinc_dust 2"},
+	{"technic:lead_lump",       "technic:lead_dust 2"},
+	{"technic:sulfur_lump",     "technic:sulfur_dust 2"},
 	
 	-- Other
 	{"default:cobble",          "default:gravel"},
 	{"default:gravel",          "default:dirt"},
 	{"default:stone",           "default:sand"},
+	{"default:sandstone",       "default:sand 2"}, -- reverse recipe can be found in the compressor
 }
+
+-- defuse the sandstone -> 4 sand recipe to avoid infinite sand bugs (also consult the inverse compressor recipe)
+minetest.register_craft({
+	output = "default:sandstone 0",
+	recipe = {
+		{'default:sandstone'}
+	},
+})
+
+if minetest.get_modpath("farming") then
+	table.insert(recipes, {"farming:seed_wheat",   "farming:flour 1"})
+end
 
 if minetest.get_modpath("moreores") then
 	table.insert(recipes, {"moreores:mithril_lump",   "technic:mithril_dust 2"})
@@ -47,13 +62,19 @@ for _, data in pairs(recipes) do
 	technic.register_grinder_recipe({input = {data[1]}, output = data[2]})
 end
 
+-- defuse common grinder unfriendly recipes
+if minetest.get_modpath("fake_fire") then -- from homedecor_modpack
+	minetest.register_craft({ output='default:cobble 0', recipe={{'default:cobble'}}})
+	minetest.register_craft({ output='default:gravel 0', recipe={{'default:gravel'}}})
+end
+
+-- dusts
 local function register_dust(name, ingot)
 	local lname = string.lower(name)
 	lname = string.gsub(lname, ' ', '_')
 	minetest.register_craftitem("technic:"..lname.."_dust", {
 		description = S("%s Dust"):format(S(name)),
 		inventory_image = "technic_"..lname.."_dust.png",
-		on_place_on_ground = minetest.craftitem_place_item,
 	})
 	if ingot then
 		minetest.register_craft({
@@ -73,10 +94,12 @@ register_dust("Cast Iron",       "technic:cast_iron_ingot")
 register_dust("Chromium",        "technic:chromium_ingot")
 register_dust("Coal",            nil)
 register_dust("Copper",          "default:copper_ingot")
+register_dust("Lead",            "technic:lead_ingot")
 register_dust("Gold",            "default:gold_ingot")
 register_dust("Mithril",         "moreores:mithril_ingot")
 register_dust("Silver",          "moreores:silver_ingot")
 register_dust("Stainless Steel", "technic:stainless_steel_ingot")
+register_dust("Sulfur",          nil)
 register_dust("Tin",             "moreores:tin_ingot")
 register_dust("Wrought Iron",    "technic:wrought_iron_ingot")
 register_dust("Zinc",            "technic:zinc_ingot")

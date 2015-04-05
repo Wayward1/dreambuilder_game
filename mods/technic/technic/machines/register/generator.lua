@@ -109,6 +109,8 @@ function technic.register_generator(data)
 		allow_metadata_inventory_take = technic.machine_inventory_take,
 		allow_metadata_inventory_move = technic.machine_inventory_move,
 		technic_run = run,
+		after_place_node = data.tube and pipeworks.after_place,
+		after_dig_node = technic.machine_after_dig_node
 	})
 
 	minetest.register_node("technic:"..ltier.."_generator_active", {
@@ -135,7 +137,7 @@ function technic.register_generator(data)
 			local meta = minetest.get_meta(pos)
 			
 			-- Connected back?
-			if meta:get_int(tier.."_EU_timeout") > 0 then return end
+			if meta:get_int(tier.."_EU_timeout") > 0 then return false end
 			
 			local burn_time = meta:get_int("burn_time") or 0
 
@@ -143,7 +145,7 @@ function technic.register_generator(data)
 				meta:set_int(tier.."_EU_supply", 0)
 				meta:set_int("burn_time", 0)
 				technic.swap_node(pos, "technic:"..ltier.."_generator")
-				return
+				return false
 			end
 
 			local burn_totaltime = meta:get_int("burn_totaltime") or 0
@@ -158,8 +160,7 @@ function technic.register_generator(data)
 				"image[4, 1;1, 1;default_furnace_fire_bg.png^[lowpart:"..
 				(percent)..":default_furnace_fire_fg.png]"..
 				"list[current_player;main;0, 5;8, 4;]")
-			local timer = minetest.get_node_timer(pos)
-	        	timer:start(1)
+			return true
 		end,
 	})
 

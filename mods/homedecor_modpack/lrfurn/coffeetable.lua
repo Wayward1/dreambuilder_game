@@ -4,7 +4,6 @@ minetest.register_node("lrfurn:coffeetable_back", {
 	tiles = {"lrfurn_coffeetable_back.png", "lrfurn_coffeetable_back.png",  "lrfurn_coffeetable_back.png",  "lrfurn_coffeetable_back.png",  "lrfurn_coffeetable_back.png",  "lrfurn_coffeetable_back.png"},
 	paramtype = "light",
 	paramtype2 = "facedir",
-	stack_max = 1,
 	groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=3},
 	sounds = default.node_sound_wood_defaults(),
 	node_box = {
@@ -13,9 +12,9 @@ minetest.register_node("lrfurn:coffeetable_back", {
 					--legs
 					{-0.375, -0.5, -0.375, -0.3125, -0.0625, -0.3125},
 					{0.3125, -0.5, -0.375, 0.375, -0.0625, -0.3125},
-					
+
 					--tabletop
-					{-0.4375, -0.0625, -0.4375, 0.4375, 0, 0.5},	
+					{-0.4375, -0.0625, -0.4375, 0.4375, 0, 0.5},
 				}
 	},
 	selection_box = {
@@ -42,7 +41,7 @@ minetest.register_node("lrfurn:coffeetable_back", {
 			minetest.set_node(pos, node)
 		end
 	end,
-		
+
 	on_destruct = function(pos)
 		local node = minetest.get_node(pos)
 		local param2 = node.param2
@@ -58,7 +57,7 @@ minetest.register_node("lrfurn:coffeetable_back", {
 		if( minetest.get_node({x=pos.x, y=pos.y, z=pos.z}).name == "lrfurn:coffeetable_front" ) then
 			if( minetest.get_node({x=pos.x, y=pos.y, z=pos.z}).param2 == param2 ) then
 				minetest.remove_node(pos)
-			end	
+			end
 		end
 	end,
 })
@@ -76,7 +75,7 @@ minetest.register_node("lrfurn:coffeetable_front", {
 					--legs
 					{-0.375, -0.5, 0.3125, -0.3125, -0.0625, 0.375},
 					{0.3125, -0.5, 0.3125, 0.375, -0.0625, 0.375},
-					
+
 					--tabletop
 					{-0.4375, -0.0625, -0.5, 0.4375, 0, 0.4375},
 				}

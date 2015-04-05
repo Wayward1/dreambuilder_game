@@ -82,15 +82,9 @@ local add_new_cable_node = function(nodes, pos)
 	return true
 end
 
-local load_position = function(pos)
-	if minetest.get_node_or_nil(pos) then return end
-	local vm = VoxelManip()
-	local MinEdge, MaxEdge = vm:read_from_map(pos, pos)
-end
-
 -- Generic function to add found connected nodes to the right classification array
-local check_node_subp = function(PR_nodes, RE_nodes, BA_nodes, SP_nodes, all_nodes, pos, machines, tier, sw_pos)
-	load_position(pos)
+local check_node_subp = function(PR_nodes, RE_nodes, BA_nodes, SP_nodes, all_nodes, pos, machines, tier, sw_pos, from_below)
+	technic.get_or_load_node(pos)
 	local meta = minetest.get_meta(pos)
 	local name = minetest.get_node(pos).name
 
@@ -106,7 +100,8 @@ local check_node_subp = function(PR_nodes, RE_nodes, BA_nodes, SP_nodes, all_nod
 			add_new_cable_node(PR_nodes, pos)
 			add_new_cable_node(RE_nodes, pos)
 		elseif machines[name] == "SPECIAL" and
-				(pos.x ~= sw_pos.x or pos.y ~= sw_pos.y or pos.z ~= sw_pos.z) then
+				(pos.x ~= sw_pos.x or pos.y ~= sw_pos.y or pos.z ~= sw_pos.z) and
+				from_below then
 			-- Another switching station -> disable it
 			add_new_cable_node(SP_nodes, pos)
 			meta:set_int("active", 0)
@@ -131,7 +126,7 @@ local traverse_network = function(PR_nodes, RE_nodes, BA_nodes, SP_nodes, all_no
 		{x=pos.x,   y=pos.y,   z=pos.z-1}}
 	--print("ON")
 	for i, cur_pos in pairs(positions) do
-		check_node_subp(PR_nodes, RE_nodes, BA_nodes, SP_nodes, all_nodes, cur_pos, machines, tier, sw_pos)
+		check_node_subp(PR_nodes, RE_nodes, BA_nodes, SP_nodes, all_nodes, cur_pos, machines, tier, sw_pos, i == 3)
 	end
 end
 
@@ -176,6 +171,7 @@ end
 -----------------------------------------------
 minetest.register_abm({
 	nodenames = {"technic:switching_station"},
+	label = "Switching Station", -- allows the mtt profiler to profile this abm individually
 	interval   = 1,
 	chance     = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
@@ -219,7 +215,7 @@ minetest.register_abm({
 		-- Run all the nodes
 		local function run_nodes(list)
 			for _, pos2 in ipairs(list) do
-				load_position(pos2)
+				technic.get_or_load_node(pos2)
 				local node2 = minetest.get_node(pos2)
 				local nodedef
 				if node2 and node2.name then
@@ -297,8 +293,8 @@ minetest.register_abm({
 		--dprint("Total BA demand:"..BA_eu_demand)
 
 		meta:set_string("infotext",
-				S("%s. Supply: %d Demand: %d"):format(
-				machine_name, PR_eu_supply, RE_eu_demand))
+				S("@1. Supply: @2 Demand: @3",
+				machine_name, technic.prettynum(PR_eu_supply), technic.prettynum(RE_eu_demand)))
 
 		-- If the PR supply is enough for the RE demand supply them all
 		if PR_eu_supply >= RE_eu_demand then
